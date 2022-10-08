@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Expenses;
+use Illuminate\Http\Request;
+use App\Models\Inserminate;
 
-class ExpensesController extends Controller
+class InseminationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,9 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => Expenses::with('expenseTypes')->get()], 200);
+        return response()->json(['data' => Inserminate::with('cattle')->get()], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,23 +27,19 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
-            'expense_date' => 'required',
-            'amount_spent' => 'required',
-            'receipt_no' => 'nullable',
+            'insemination_date' => 'required',
             'description' => 'required',
-            'expense_type_id' => 'required',
+            'cattle_id' => 'required',
         ]);
         if (!$validator->fails()) {
-            $income = new Expenses();
-            $income->expense_date = $request->expense_date;
-            $income->amount_spent = $request->amount_spent;
-            $income->receipt_no = $request->receipt_no;
+            $income = new Inserminate();
+            $income->insemination_date = $request->insemination_date;
             $income->description = $request->description;
-            $income->expense_type_id = $request->expense_type_id;
-            $income->added_by = $request->user()->id;
+            $income->cattle_id = $request->cattle_id;
             $income->save();
-            return response()->json(['message' => 'Expense Added Successfully'], 200);
+            return response()->json(['message' => 'Insemination data Added Successfully'], 200);
         } else {
             return $validator->errors();
         }

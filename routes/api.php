@@ -11,6 +11,7 @@ use App\Http\Controllers\IncomeTypeController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\InseminationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,7 +26,6 @@ use App\Http\Controllers\ExpensesController;
 Route::middleware('throttle:9000000')->group(function () {
     Route::post('manager/login', [AuthController::class, 'loginManager']);
     Route::post('admin/login', [AuthController::class, 'loginAdmin']);
-
     Route::apiResources([
         'managers' => ManagersController::class,
     ]);
@@ -34,19 +34,21 @@ Route::middleware('throttle:9000000')->group(function () {
     Route::apiResource('cattle', CattleController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('incomeTypes', IncomeTypeController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('expenseTypes', ExpenseTypeController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('inseminations', InseminationController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('expenses', ExpensesController::class)->except(['store', 'destroy', 'update']);
 });
+
 
 Route::middleware('auth:api-manager,api-admin')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::apiResources([
-        'expenses' => ExpensesController::class,
-    ]);
-    Route::apiResources([
         'incomes' => IncomeController::class,
     ]);
+    Route::apiResource('expenses', ExpensesController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('cattleBreed', CattleBreedController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('cattle', CattleController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('milk', MilkController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('incomeTypes', IncomeTypeController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('expenseTypes', ExpenseTypeController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('inseminations', InseminationController::class)->only(['store', 'destroy', 'update']);
 });

@@ -29,7 +29,6 @@ class ManagerRequest extends FormRequest
             'email' => 'nullable',
             'phone_contact' => 'required',
             'password' => 'required',
-
         ];
     }
 }
