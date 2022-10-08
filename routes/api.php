@@ -29,21 +29,15 @@ Route::middleware('throttle:9000000')->group(function () {
     Route::apiResources([
         'managers' => ManagersController::class,
     ]);
+    Route::apiResource('milk', MilkController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('cattleBreed', CattleBreedController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('cattle', CattleController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('incomeTypes', IncomeTypeController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('expenseTypes', ExpenseTypeController::class)->except(['store', 'destroy', 'update']);
 });
 
 Route::middleware('auth:api-manager,api-admin')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
-    Route::apiResources([
-        'milk' => MilkController::class,
-    ]);
-    Route::apiResources([
-        'incomeTypes' => IncomeTypeController::class,
-    ]);
-    Route::apiResources([
-        'expenseTypes' => ExpenseTypeController::class,
-    ]);
     Route::apiResources([
         'expenses' => ExpensesController::class,
     ]);
@@ -52,4 +46,7 @@ Route::middleware('auth:api-manager,api-admin')->group(function () {
     ]);
     Route::apiResource('cattleBreed', CattleBreedController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('cattle', CattleController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('milk', MilkController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('incomeTypes', IncomeTypeController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('expenseTypes', ExpenseTypeController::class)->only(['store', 'destroy', 'update']);
 });

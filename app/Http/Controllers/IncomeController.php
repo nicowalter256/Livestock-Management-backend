@@ -15,7 +15,7 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => Income::all()], 200);
+        return response()->json(['data' => Income::with('incomeTypes')->get()], 200);
     }
 
     /**

@@ -15,8 +15,8 @@ class CattleController extends Controller
      */
     public function index()
     {
-        $data = Cattle::all();
-        return response()->json($data);
+        $data = Cattle::with('breed')->get();
+        return response()->json(['data' => $data]);
     }
 
     /**

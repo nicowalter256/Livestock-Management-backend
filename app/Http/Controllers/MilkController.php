@@ -15,7 +15,7 @@ class MilkController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => Milk::all()], 200);
+        return response()->json(['data' => Milk::with('cattle.breed')->get()], 200);
     }
 
     /**
