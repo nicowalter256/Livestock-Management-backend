@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Expenses;
+use Illuminate\Support\Facades\Notification;
 
 class ExpensesController extends Controller
 {
@@ -52,6 +53,7 @@ class ExpensesController extends Controller
             $income->expense_type_id = $request->expense_type_id;
             $income->added_by = $request->user()->id;
             $income->save();
+            Notification::route('mail', env('MANAGER_EMAIL'))->notify(new \App\Notifications\NewRecordNotification("New Expense", "A new expense has been added by farm manager", "Please Login to the application for details"));
             return response()->json(['message' => 'Expense Added Successfully'], 200);
         } else {
             return $validator->errors();

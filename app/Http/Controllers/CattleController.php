@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cattle;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
 
 class CattleController extends Controller
 {
@@ -78,6 +79,7 @@ class CattleController extends Controller
             $cattle->gender = $request->gender;
             $cattle->cattle_breed_id = $request->cattle_breed_id;
             $cattle->save();
+            Notification::route('mail', env('MANAGER_EMAIL'))->notify(new \App\Notifications\NewRecordNotification("New Cow Added", "A new cow has been added by farm manager", "Please Login to the application for details"));
             return response()->json(['message' => 'Cattle Added Successfully'], 200);
         } else {
             return $validator->errors();

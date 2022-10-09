@@ -16,9 +16,11 @@ class NewRecordNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($type, $message, $details)
     {
-        //
+        $this->type = $type;
+        $this->message = $message;
+        $this->details = $details;
     }
 
     /**
@@ -41,9 +43,10 @@ class NewRecordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject($this->type)
+            ->line($this->message)
+            ->line($this->details)
+            ->line('Thank you for using our application!');
     }
 
     /**

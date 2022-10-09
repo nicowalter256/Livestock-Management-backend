@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Milk;
+use Illuminate\Support\Facades\Notification;
 
 class MilkController extends Controller
 {
@@ -18,15 +19,6 @@ class MilkController extends Controller
         return response()->json(['data' => Milk::with('cattle.breed')->get()], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -49,6 +41,7 @@ class MilkController extends Controller
             $milk->description = $request->description;
             $milk->cattle_id = $request->cattle_id;
             $milk->save();
+            Notification::route('mail', env('MANAGER_EMAIL'))->notify(new \App\Notifications\NewRecordNotification("New Milk Record", "A milk record has been added by farm manager", "Please Login to the application for details"));
             return response()->json(['message' => 'Milk Added Successfully'], 200);
         } else {
             return $validator->errors();
