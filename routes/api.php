@@ -12,6 +12,8 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\InseminationController;
+use App\Http\Controllers\FeedsController;
+use App\Http\Controllers\CalfsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +38,8 @@ Route::middleware('throttle:9000000')->group(function () {
     Route::apiResource('expenseTypes', ExpenseTypeController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('inseminations', InseminationController::class)->except(['store', 'destroy', 'update']);
     Route::apiResource('expenses', ExpensesController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('calfs', CalfsController::class)->except(['store', 'destroy', 'update']);
+    Route::apiResource('feeds', FeedsController::class)->except(['store', 'destroy', 'update']);
 });
 
 
@@ -51,4 +55,6 @@ Route::middleware('auth:api-manager,api-admin')->group(function () {
     Route::apiResource('incomeTypes', IncomeTypeController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('expenseTypes', ExpenseTypeController::class)->only(['store', 'destroy', 'update']);
     Route::apiResource('inseminations', InseminationController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('calfs', CalfsController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('feeds', FeedsController::class)->only(['store', 'destroy', 'update']);
 });
