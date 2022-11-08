@@ -14,6 +14,8 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\InseminationController;
 use App\Http\Controllers\FeedsController;
 use App\Http\Controllers\CalfsController;
+use App\Http\Controllers\AnalyticsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +29,8 @@ use App\Http\Controllers\CalfsController;
 
 Route::middleware('throttle:9000000')->group(function () {
     Route::post('manager/login', [AuthController::class, 'loginManager']);
+    Route::get('incomes/sum', [AnalyticsController::class, 'getIncomes']);
+    Route::get('milk/all', [AnalyticsController::class, 'getMilk']);
     Route::post('admin/login', [AuthController::class, 'loginAdmin']);
     Route::apiResources([
         'managers' => ManagersController::class,

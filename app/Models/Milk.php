@@ -11,7 +11,7 @@ class Milk extends Model
     use HasFactory;
 
     protected $fillable = [
-        'milking_date', 'total_milk', 'description', 'cattle_id'
+        'milking_date', 'total_milk', 'description', 'cattle_id', 'id'
     ];
 
     public function cattle()
